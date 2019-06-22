@@ -10,6 +10,7 @@
   </head>
   <body>
     <div id="start">Start Quiz</div>
+    <!---display:none as we need to show start only once in the beginning of the quiz -->
     <div id="quiz" style="display:none"></div>
     <div id="image"><img src="flag"</div>
     <div id="question"><p>Question</p></div>
@@ -21,9 +22,10 @@
     <div id="choices"></div>
     <div class="choice" id="A" onclick="checkAnswer('A')">A</div>
     <div class="choice" id="B" onclick="checkAnswer('B')">B</div>
-    <div class="choice" id="C" onclick="checkAnswer('C')">C</div>
-
+    <div class="choice" id="C" onclick="checkAnswer('C')">C</div>  
+    <div id="progress"></div>
     <div id="scorecontainer" style:"display:none"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/app.js"/>
   </body>
 </html>
