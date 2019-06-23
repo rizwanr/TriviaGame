@@ -10,6 +10,7 @@ var choiceC = $('#C');
 var progress = $('#progress');
 var scoreDiv = $('#scoreContainer');
 var endGameDiv = $('#endGame');
+var correctAnswerDiv = $('#correctAnswer');
 
 //variable for storing question time- 15sec
 var questionTime = 10;
@@ -138,6 +139,7 @@ function checkAnswer(answer) {
 start.on('click', startQuiz());
 
 function startQuiz() {
+  correctAnswerDiv.css('display', 'none');
   endGameDiv.css('display', 'none');
   scoreDiv.css('display', 'none');
   start.css('display', 'none');
@@ -161,17 +163,27 @@ function renderScore() {
       '<br><div class="restartGame"><span id="yes">Yes ' +
       '</span><span id ="no">No</span></div>'
   );
+  renderEndGame();
   // (NOTE: Pay attention to the unusual syntax here for the click event.
   // Because we are creating click events on "dynamic" content, we can't just use the usual "on" "click" syntax.)
-
-  $('#yes').on('click', startQuiz);
-  currentQuestionIndex = 0;
-  renderProgressBar();
-
-  $('#no').on('click', renderEndGame);
 }
 
 function renderEndGame() {
-  endGameDiv.css('display', 'block');
-  endGameDiv.html('<h4> Thank you for playing</h4>');
+  $('#yes').on('click', startQuiz);
+  endGameDiv.css('display', 'none');
+  currentQuestionIndex = 0;
+  scoreValue = 0;
+  renderProgressBar();
+  correctAnswerDiv.empty();
+  $('#no').on('click', function() {
+    correctAnswerDiv.css('display', ' block');
+    questions.forEach(question => {
+      correctAnswerDiv.append(
+        '<h4> Question:' + question.question + ' Answer: ' + question.correct
+      );
+    });
+
+    endGameDiv.css('display', 'block');
+    endGameDiv.html('<h4> Thank you for playing</h4>');
+  });
 }
