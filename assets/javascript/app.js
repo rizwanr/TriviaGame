@@ -8,7 +8,8 @@ var choiceA = $('#A');
 var choiceB = $('#B');
 var choiceC = $('#C');
 var progress = $('#progress');
-var score = $('#scorecontainer');
+var scoreDiv = $('#scoreContainer');
+var endGameDiv = $('#endGame');
 
 //variable for storing question time- 15sec
 var questionTime = 10;
@@ -64,6 +65,7 @@ function renderQuestion() {
 
 //Render progressBar
 function renderProgressBar() {
+  progress.empty();
   for (var qIndex = 0; qIndex <= lastQuestionIndex; qIndex++) {
     progress.append("<div class='prog' id=" + qIndex + '>' + qIndex + '</div>');
   }
@@ -113,7 +115,7 @@ let scoreValue = 0;
 //function takes in the choices as arguement
 function checkAnswer(answer) {
   if (answer === questions[currentQuestionIndex].correct) {
-    score++;
+    scoreValue++;
 
     answerIsCorrect();
   } else {
@@ -136,6 +138,8 @@ function checkAnswer(answer) {
 start.on('click', startQuiz());
 
 function startQuiz() {
+  endGameDiv.css('display', 'none');
+  scoreDiv.css('display', 'none');
   start.css('display', 'none');
   renderCounter();
   TIMER = setInterval(renderCounter, 1000);
@@ -146,6 +150,28 @@ function startQuiz() {
 
 //Step 7 function showeScore()
 function renderScore() {
-  score.css('display', 'block');
-  score.html('<p>' + scoreValue + '</p>');
+  scoreDiv.css('display', 'block');
+  scoreDiv.html(
+    '<p> Correct Answer: ' +
+      scoreValue +
+      '/' +
+      questions.length +
+      '</p>' +
+      '<br> <h4 class="restartGame">Do you want to restart the game?</h4><br/>' +
+      '<br><div class="restartGame"><span id="yes">Yes ' +
+      '</span><span id ="no">No</span></div>'
+  );
+  // (NOTE: Pay attention to the unusual syntax here for the click event.
+  // Because we are creating click events on "dynamic" content, we can't just use the usual "on" "click" syntax.)
+
+  $('#yes').on('click', startQuiz);
+  currentQuestionIndex = 0;
+  renderProgressBar();
+
+  $('#no').on('click', renderEndGame);
+}
+
+function renderEndGame() {
+  endGameDiv.css('display', 'block');
+  endGameDiv.html('<h4> Thank you for playing</h4>');
 }

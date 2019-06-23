@@ -18,7 +18,7 @@ body {
   word-break: break-all;
   width: 100px;
   height: 150px;
-  border: 2px solid lightgrey;
+  border: 2px solid lightskyblue;
   text-align: center;
   cursor: pointer;
   position: absolute;
@@ -27,7 +27,7 @@ body {
   color: lightgrey;
 }
 #start:hover {
-  border: 3px solid lightseagreen;
+  border: 3px solid aqua;
   color: lightseagreen;
 }
 
@@ -123,7 +123,7 @@ body {
 #scoreContainer {
   margin: 20px auto;
   background-color: white;
-  opacity: 0.8;
+  opacity: 0.9;
   height: 300px;
   width: 700px;
   border-radius: 5px;
@@ -139,11 +139,18 @@ body {
 #scoreContainer p {
   position: absolute;
   display: block;
-  width: 59px;
   height: 59px;
-  top: 130px;
-  left: 325px;
-  font-size: 1.5em;
+  left: 250px;
+  font-size: 1em;
   font-weight: bold;
+  text-align: center;
+}
+
+.restartGame {
+  text-align: center;
+  left: 150px;
+}
+
+#endGame {
   text-align: center;
 }
