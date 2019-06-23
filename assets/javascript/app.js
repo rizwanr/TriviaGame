@@ -40,22 +40,38 @@ const questions = [{
 //#Render question on the screen
 
 //1. last question is the length of the question-1 in the array 
-let lastQuestion = questions.length - 1;
+let lastQuestionIndex = questions.length - 1;
 //2. current question that the user is viewing; setting to zero
 let currectQuestionIndex = 0;
 
-
-
-//3. 
 function renderQuestion() {
   //select the  question at index 0 -display first question
-  let q = questions[currectQuestionIndex];
-  $('#question').text = q.question
-  question.html("<p>" + q.question + "</p>")
-  choiceA.text(q.choiceA);
-  choiceB.text(q.choiceB);
-  choiceC.text(q.choiceC)
+  while (currectQuestionIndex <= lastQuestionIndex) {
+    let q = questions[currectQuestionIndex];
+    $('#question').text = q.question
+    question.html("<p>" + q.question + "</p>")
+    choiceA.text(q.choiceA);
+    choiceB.text(q.choiceB);
+    choiceC.text(q.choiceC)
+    currectQuestionIndex++
+  }
+
 
 }
 
-renderQuestion()
+//Render progressBar 
+function renderProgressBar() {
+  for (var qIndex = 0; qIndex <= lastQuestionIndex; qIndex++) {
+    progress.html("<div>" + qIndex + "</div>")
+  }
+}
+
+//render correct answer on the progressBar
+function answerIsCorrect() {
+  document.getElementById(currectQuestionIndex).style.backgroundColor = "green"
+}
+
+//render answerIsWrong
+function answerIsCorrect() {
+  document.getElementById(currectQuestionIndex).style.backgroundColor = "red"
+}
