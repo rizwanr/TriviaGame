@@ -1,4 +1,4 @@
-//Get all the elements from the DOM - as we need to update the inner HTML
+//Step 1: Get all the elements from the DOM - as we need to update the inner HTML
 var start = $('#start')
 var quiz = $('#quiz');
 var question = $('#question')
@@ -20,7 +20,7 @@ var count = 0;
 var gaugeProgress = gaugeWidth / questionTime
 
 
-//Create questions, choices and correct inside an array 
+//Step:2 Create questions, choices and correct inside an array 
 const questions = [{
     question: "Where would you go if you wanted to see a whale? ",
     choiceA: "Alberta",
@@ -47,7 +47,7 @@ const questions = [{
   },
 ]
 
-//#Render question on the screen
+//#Step 3 : Render question on the screen
 
 //1. last question is the length of the question-1 in the array 
 let lastQuestionIndex = questions.length - 1;
@@ -88,16 +88,19 @@ function answerIsWrong() {
   //document.getElementById(currectQuestionIndex).style.backgroundColor = "red"
 }
 
-//render Counter
+//
+let TIMER = setInterval(renderCounter, 1000)
+
+//Step 4: render Counter
 function renderCounter() {
   //if the count is less than equal to 10sec
   if (count <= questionTime) {
-    //update the count -time and progressbar
+    //update the count(time) and progressbar
     counter.html(count);
     timeGuage.css("width", gaugeProgress * count + "px")
     count++
   } else {
-    //if the question time is exceeded, we have to set the count yo zero
+    //if the question time is exceeded, we have to set the count to zero
     count = 0;
     //if the question time is exceeded and no answer, then the answer is wrong
     answerIsWrong();
@@ -105,7 +108,36 @@ function renderCounter() {
     if (currectQuestionIndex < lastQuestionIndex) {
       currectQuestionIndex++;
       renderQuestion();
+    } else {
+      //clear the interval and show the score
+      clearInterval(TIMER)
+      renderScore()
     }
   }
 
+}
+
+//Step 5 checkAnswer funtion
+let score = 0;
+
+//function takes in the choices as arguement
+function checkAnswer(answer) {
+  if (questions[currectQuestionIndex].correct === answer) {
+    score++
+    answerIsCorrect();
+  } else {
+    answerIsWrong();
+    //move to next questions
+    if (currectQuestionIndex < lastQuestionIndex) {
+      count = 0;
+      currectQuestionIndex++;
+      renderQuestion();
+
+    } else {
+      //clear the interval and show the score
+      clearInterval(TIMER);
+      showScore();
+    }
+
+  }
 }
