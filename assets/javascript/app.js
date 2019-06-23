@@ -10,6 +10,16 @@ var choiceC = $('#C')
 var progress = $('#progress')
 var score = $('#scorecontainer')
 
+//variable for storing question time- 15sec
+var questionTime = 10;
+//size of the time Gauge - 150px
+var gaugeWidth = 150
+//Initialize the count to zero sec
+var count = 0;
+// This causes the time Guage to increment by 15 px at a time 
+var gaugeProgress = gaugeWidth / questionTime
+
+
 //Create questions, choices and correct inside an array 
 const questions = [{
     question: "Where would you go if you wanted to see a whale? ",
@@ -68,10 +78,34 @@ function renderProgressBar() {
 
 //render correct answer on the progressBar
 function answerIsCorrect() {
-  document.getElementById(currectQuestionIndex).style.backgroundColor = "green"
+  $(this).css('background-color', 'green')
+  // document.getElementById(currectQuestionIndex).style.backgroundColor = "green"
 }
 
 //render answerIsWrong
-function answerIsCorrect() {
-  document.getElementById(currectQuestionIndex).style.backgroundColor = "red"
+function answerIsWrong() {
+  $(this).css('background-color', 'red')
+  //document.getElementById(currectQuestionIndex).style.backgroundColor = "red"
+}
+
+//render Counter
+function renderCounter() {
+  //if the count is less than equal to 10sec
+  if (count <= questionTime) {
+    //update the count -time and progressbar
+    counter.html(count);
+    timeGuage.css("width", gaugeProgress * count + "px")
+    count++
+  } else {
+    //if the question time is exceeded, we have to set the count yo zero
+    count = 0;
+    //if the question time is exceeded and no answer, then the answer is wrong
+    answerIsWrong();
+    //if current question index is less than last question index, then there are still questions left
+    if (currectQuestionIndex < lastQuestionIndex) {
+      currectQuestionIndex++;
+      renderQuestion();
+    }
+  }
+
 }
